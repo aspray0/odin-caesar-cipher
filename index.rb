@@ -1,16 +1,17 @@
-def caesar_cipher(string, shift = 0)
-  ord_array = string.split("").map { |char| char.ord }
-  new_array = ord_array.map do |ord|
-    if ord.between?(65, 122)
-      if (ord.between?(86, 90)) || (ord.between?(118, 122))
-        ord = ord - 26 + shift
-      else
-        ord += shift
-      end
-    else
-      ord = ord
-    end
-  end
-  char_array = new_array.map { |ord| ord.chr }
-  char_array.join("")
+# frozen_string_literal: true
+
+def caesar_cipher(string, shift_factor)
+  string.split('').map { |char| ord_shift(char, shift_factor) }.join('')
 end
+
+def ord_shift(char, shift_factor)
+  if char.ord.between?(86, 90) || char.ord.between?(118, 122)
+    (char.ord - 26 + shift_factor).chr
+  elsif (65..85).include?(char.ord) || (97..117).include?(char.ord)
+    (char.ord + shift_factor).chr
+  else
+    char
+  end
+end
+
+puts caesar_cipher('What a string!', 5)
